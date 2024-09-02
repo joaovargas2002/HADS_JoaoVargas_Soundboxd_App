@@ -1,13 +1,12 @@
 import Image from "next/image";
 
+import Header from './components/header'
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="bg-white z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+    <main className="flex flex-col items-center justify-between">
 
-    
-
-      </div>
+      <Header />
     </main>
   );
 }
