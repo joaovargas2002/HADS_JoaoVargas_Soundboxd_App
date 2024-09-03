@@ -1,12 +1,13 @@
-import Image from "next/image";
+import Header from './components/Header/Header'
 
-import Header from './components/header'
+import MySwiper from './components/MySwiper/MySwiper';
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-between">
-
+    <main className="bg-brand-primary flex flex-col items-center justify-between">
       <Header />
+
+      <MySwiper />
     </main>
   );
 }
