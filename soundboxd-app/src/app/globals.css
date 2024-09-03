@@ -45,6 +45,30 @@ body {
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'SF-Pro Bold';
+  src: url('/fonts/SF-Pro/SFPRODISPLAYBOLD.OTF') format('truetype'),
+    url('/fonts/SF-Pro/SFPRODISPLAYBOLD.OTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF-Pro Medium';
+  src: url('/fonts/SF-Pro/SFPRODISPLAYMEDIUM.OTF') format('truetype'),
+    url('/fonts/SF-Pro/SFPRODISPLAYMEDIUM.OTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.sf-pro-medium {
+  font-family: 'SF-Pro Medium';
+}
+
+.sf-pro-bold {
+  font-family: 'SF-Pro Bold';
+}
+
 .montserrat {
   font-family: 'Montserrat', sans-serif;
 }
