@@ -10,14 +10,22 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import './styles.css';
+import { title } from 'process';
 
 export default function App() {
   const [swiperRef, setSwiperRef] = useState(null);
   const appendNumber = useRef(500);
   const prependNumber = useRef(1);
+
+  const albums = [
+    { id: 1, image:'/images/nao-sei.jpg', title: 'Rage Against The machine', description: 'paulera'},
+    { id: 2, title: 'dfawdwad', description: 'xereca'},
+    { id: 3, title: 'adwdawd', description: 'cu'},
+  ]
+
   // Create array with 500 slides
   const [slides, setSlides] = useState(
-    Array.from({ length: 500 }).map((_, index) => `Slide ${index + 1}`)
+    Array.from({ length: albums.length }).map((_, index) => `Slide ${index + 1}`)
   );
 
   const prepend = () => {
@@ -52,9 +60,13 @@ export default function App() {
         navigation={true}
         virtual
       >
-        {slides.map((slideContent, index) => (
-          <SwiperSlide key={slideContent} virtualIndex={index}>
-            {slideContent}
+        {albums.map((album) => (
+          <SwiperSlide>
+                <div key={album.id}>
+                  <img src={album.image} />
+                  <h3>{album.title}</h3>
+                  <h3>{album.description}</h3>
+                </div>
           </SwiperSlide>
         ))}
       </Swiper>
