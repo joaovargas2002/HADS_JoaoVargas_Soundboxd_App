@@ -5,7 +5,7 @@ import WhatsNew from './components/WhatsNew/WhatsNew';
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="bg-black">
       <Header />
 
       <Title />
