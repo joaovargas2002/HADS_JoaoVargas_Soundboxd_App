@@ -18,9 +18,9 @@ export default function App() {
   const prependNumber = useRef(1);
 
   const albums = [
-    { id: 1, image:'/images/nao-sei.jpg', title: 'Rage Against The machine', description: 'paulera'},
-    { id: 2, title: 'dfawdwad', description: 'xereca'},
-    { id: 3, title: 'adwdawd', description: 'cu'},
+    { id: 1, image: '/images/nao-sei.jpg', title: 'Rage Against The machine', year: 1992, genre: 'paulera' },
+    { id: 2, title: 'dfawdwad', description: 'xereca' },
+    { id: 3, title: 'adwdawd', description: 'cu' },
   ]
 
   // Create array with 500 slides
@@ -60,15 +60,19 @@ export default function App() {
         navigation={true}
         virtual
       >
-        {albums.map((album) => (
-          <SwiperSlide>
-                <div key={album.id}>
-                  <img src={album.image} />
-                  <h3>{album.title}</h3>
-                  <h3>{album.description}</h3>
-                </div>
-          </SwiperSlide>
-        ))}
+        <SwiperSlide className='flex flex-col gap-6'>
+          {albums.map((album) => (
+            <div className='flex h-fit border border-white p-4' key={album.id}>
+              <img className='w-24' src={album.image} />
+              <div className='grid'>
+                <h3>{album.title}</h3>
+                <p>{album.year}</p>
+                <h3>{album.genre}</h3>
+              </div>
+            </div>
+          ))}
+        </SwiperSlide>
+
       </Swiper>
     </>
   );
