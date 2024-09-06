@@ -65,9 +65,9 @@ export default function App() {
             <div className='flex h-fit border border-white p-4' key={album.id}>
               <img className='w-24' src={album.image} />
               <div className='grid'>
-                <h3>{album.title}</h3>
-                <p>{album.year}</p>
-                <h3>{album.genre}</h3>
+                <h3 className='montserrat'>{album.title}</h3>
+                <p className='montserrat'>{album.year}</p>
+                <p className='montserrat'>{album.genre}</p>
               </div>
             </div>
           ))}
