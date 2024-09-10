@@ -3,6 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { Virtual, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Link from 'next/link';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -48,32 +49,32 @@ export default function App() {
 
   return (
     <>
-      <Swiper
-        modules={[Virtual, Navigation, Pagination]}
-        onSwiper={setSwiperRef}
-        slidesPerView={3}
-        centeredSlides={true}
-        spaceBetween={30}
-        pagination={{
-          type: 'fraction',
-        }}
-        navigation={true}
-        virtual
-      >
-        <SwiperSlide className='flex flex-col gap-6'>
-          {albums.map((album) => (
-            <div className='flex h-fit border border-white p-4' key={album.id}>
-              <img className='w-24' src={album.image} />
-              <div className='grid'>
-                <h3 className='montserrat'>{album.title}</h3>
-                <p className='montserrat'>{album.year}</p>
-                <p className='montserrat'>{album.genre}</p>
-              </div>
-            </div>
-          ))}
-        </SwiperSlide>
+        <Swiper
+          modules={[Virtual, Navigation, Pagination]}
+          onSwiper={setSwiperRef}
+          slidesPerView={3}
+          centeredSlides={true}
+          spaceBetween={30}
+          pagination={{
+            type: 'fraction',
+          }}
+          navigation={true}
+          virtual
+        >
 
-      </Swiper>
+          <SwiperSlide className='flex flex-col gap-6'>
+            {albums.map((album) => (
+              <div className='flex h-fit border border-white p-4' key={album.id}>
+                <img className='w-24' src={album.image} />
+                <div className='grid'>
+                  <h3 className='montserrat'>{album.title}</h3>
+                  <p className='montserrat'>{album.year}</p>
+                  <p className='montserrat'>{album.genre}</p>
+                </div>
+              </div>
+            ))}
+          </SwiperSlide>
+        </Swiper>
     </>
   );
 }
