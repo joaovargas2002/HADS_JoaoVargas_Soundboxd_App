@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
-        <div className="flex border-t border-white px-16 py-4">
-            <div className="toledo text-xl cursor-pointer">
+        <div className="border-t border-white px-16 py-4">
+            <div className=" flex gap-4 toledo text-white text-2xl cursor-pointer">
                 <p>Twitter</p>
                 <p>Facebook</p>
                 <p>Instagram</p>

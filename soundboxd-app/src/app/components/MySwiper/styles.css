@@ -17,6 +17,11 @@
     justify-content: center;
     align-items: center;
   }
+
+  .swiper-slide::-webkit-scrollbar {
+    background-color: #000;
+    border-left: 1px solid #fff;
+  }
   
   .swiper-slide img {
     display: block;

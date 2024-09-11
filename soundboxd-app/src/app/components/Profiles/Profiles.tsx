@@ -19,6 +19,7 @@ export default function Profiles() {
                 <Link href="/Profiles/awddwa" target='_blank'>
                     <div className="border-white border h-32"></div>
                 </Link>
+                 
                     <div className="border-white border h-32"></div>
                     <div className="border-white border h-32"></div>
                 </div>
