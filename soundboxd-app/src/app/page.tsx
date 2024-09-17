@@ -5,7 +5,7 @@ import MySwiper from './components/MySwiper/MySwiper';
 import Title from './components/Title/Title';
 import WhatsNew from './components/WhatsNew/WhatsNew';
 import Profiles from './components/Profiles/Profiles';
-import Footer from './components/footer/footer';
+import Footer from './components/Footer/Footer';
 
 export default function Home() {
 
@@ -13,7 +13,7 @@ export default function Home() {
     <main className='bg-black'>
 
       <Header />
-      <Title />
+      <Title titleh1 ="Discover music around the world." subtitle="Theres a lot of music to be found. Checkout the lists down below."/>
       <MySwiper />
       <WhatsNew />
       <Profiles />
