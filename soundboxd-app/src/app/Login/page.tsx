@@ -10,7 +10,7 @@ import ForgotPassword from "../components/ForgotPassword/ForgotPassword"
 export default function Login() {
 
     return (
-        <main className="bg-black">
+        <main className="bg-black h-full">
             <Header />
             
             <div className="main py-32">
@@ -18,9 +18,9 @@ export default function Login() {
 
                 <form className="grid gap-2.5 justify-items-center my-9 h-full" action="">
 
-                    <InputForm name="Email or Username"/>
+                    <InputForm name="Email or Username" type="email"/>
 
-                    <InputForm name="Password"/>
+                    <InputForm name="Password" type="password"/>
 
                     <ButtonSubmit title="LOGIN"/>
 

@@ -17,19 +17,19 @@ export default function Login() {
 
                 <form className="grid gap-2.5 justify-items-center my-10 h-full" action="">
 
-                <InputForm name="Nome Completo"/>
+                <InputForm name="Nome Completo" type="text"/>
 
-                <InputForm name="Nome de Usuário"/>
+                <InputForm name="Nome de Usuário" type="text"/>
                 
-                <InputForm name="Nacionalidade (opcional)"/>
+                <InputForm name="Nacionalidade (opcional)" type="text"/>
                 
-                <InputForm name="Data de Nascimento"/>
+                <InputForm name="Data de Nascimento" type="date"/>
                 
-                <InputForm name="Endereço de E-mail"/>
+                <InputForm name="Endereço de E-mail" type="email"/>
                 
-                <InputForm name="Senha"/>
+                <InputForm name="Senha" type="password"/>
 
-                <InputForm name="Confirmação de Senha"/>
+                <InputForm name="Confirmação de Senha" type="password"/>
 
                 <ButtonSubmit title="CADASTRAR"/>
 
