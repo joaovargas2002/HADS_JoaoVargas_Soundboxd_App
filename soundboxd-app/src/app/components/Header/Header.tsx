@@ -27,8 +27,10 @@ export default function Header() {
             </div>
 
             <div className="flex gap-4">
-                <div className="montserrat text-white cursor-pointer duration-300 transform hover:scale-110" onClick={() => setShow(!show)}>{show ? 'Search' : <Input />  }
-                </div>
+                <>
+                    <div className="montserrat text-white cursor-pointer duration-300 transform hover:scale-110" onClick={() => setShow(!show)}>{show ? 'Search' : <Input />}
+                    </div>
+                </>
                 <p className="montserrat text-white cursor-pointer duration-300 transform hover:scale-110">Profile</p>
                 <p onClick={Login} className="montserrat text-white cursor-pointer duration-300 transform hover:scale-110">Login</p>
             </div>

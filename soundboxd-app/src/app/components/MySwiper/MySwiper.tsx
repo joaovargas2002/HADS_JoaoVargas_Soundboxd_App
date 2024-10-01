@@ -26,13 +26,13 @@ export default function App() {
     { id: 5, image: '/images/nao-sei.jpg', title: 'Rage Against The machine', year: 1992, genre: 'paulera' },
     { id: 6, image: '/images/nao-sei.jpg', title: 'Rage Against The machine', year: 1992, genre: 'paulera' },
     { id: 7, image: '/images/nao-sei.jpg', title: 'Rage Against The machine', year: 1992, genre: 'paulera' },
-    { id: 8, image: '/images/nao-sei.jpg', title: 'bilola', year: 1992, genre: 'paulera' },
-    { id: 9, image: '/images/nao-sei.jpg', title: 'cuzinho', year: 1992, genre: 'paulera' },
-    { id: 10, image: '/images/nao-sei.jpg', title: 'tico', year: 1992, genre: 'paulera' },
-    { id: 11, image: '/images/nao-sei.jpg', title: 'tico', year: 1992, genre: 'paulera' },
-    { id: 12, image: '/images/nao-sei.jpg', title: 'tico', year: 1992, genre: 'paulera' },
-    { id: 13, image: '/images/nao-sei.jpg', title: 'tico', year: 1992, genre: 'paulera' },
-    { id: 14, image: '/images/nao-sei.jpg', title: 'tico', year: 1992, genre: 'paulera' },
+    { id: 8, image: '/images/nao-sei.jpg', title: 'teste', year: 1992, genre: 'paulera' },
+    { id: 9, image: '/images/nao-sei.jpg', title: 'teste2', year: 1992, genre: 'paulera' },
+    { id: 10, image: '/images/nao-sei.jpg', title: 'teste', year: 1992, genre: 'paulera' },
+    { id: 11, image: '/images/nao-sei.jpg', title: 'teste', year: 1992, genre: 'paulera' },
+    { id: 12, image: '/images/nao-sei.jpg', title: 'teste', year: 1992, genre: 'paulera' },
+    { id: 13, image: '/images/nao-sei.jpg', title: 'teste', year: 1992, genre: 'paulera' },
+    { id: 14, image: '/images/nao-sei.jpg', title: 'teste', year: 1992, genre: 'paulera' },
   ]
 
   const sliceList = []
