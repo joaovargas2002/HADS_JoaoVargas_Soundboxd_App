@@ -13,7 +13,7 @@ export default function Login() {
             <Header />
 
             <div className="main py-12">
-                <Title titleh1="Register right now" subtitle="Its Free!" link="" linktitle=""/>
+                <Title titleh1="Cadastre-se agora" subtitle="É gratis!" link="" linktitle=""/>
 
                 <form className="grid gap-2.5 justify-items-center my-10 h-full" action="">
 
