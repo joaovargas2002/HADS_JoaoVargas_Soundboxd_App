@@ -17,21 +17,21 @@ export default function Login() {
 
                 <form className="grid gap-2.5 justify-items-center my-10 h-full" action="">
 
-                <InputForm name="Nome Completo" type="text"/>
+                <InputForm type="text" placeholder="Digite seu nome completo"/>
 
-                <InputForm name="Nome de Usuário" type="text"/>
+                <InputForm type="text" placeholder="Digite seu nome de usuário"/>
                 
-                <InputForm name="Nacionalidade (opcional)" type="text"/>
+                <InputForm type="text" placeholder="Digite sua nacionalidade"/>
                 
-                <InputForm name="Data de Nascimento" type="date"/>
+                <InputForm type="date" placeholder="Digite sua data de nascimento"/>
                 
-                <InputForm name="Endereço de E-mail" type="email"/>
+                <InputForm type="email" placeholder="Digite seu e-mail"/>
                 
-                <InputForm name="Senha" type="password"/>
+                <InputForm type="password" placeholder="Digite sua senha"/>
 
-                <InputForm name="Confirmação de Senha" type="password"/>
+                <InputForm type="password" placeholder="Confirme sua senha"/>
 
-                <ButtonSubmit title="CADASTRAR"/>
+                <ButtonSubmit>CADASTRE-SE</ButtonSubmit>
 
                 <ForgotPassword />
                 </form>

@@ -18,9 +18,9 @@ export default function Login() {
 
                 <form className="grid gap-2.5 justify-items-center my-9 h-full" action="">
 
-                    <InputForm name="Email or Username" type="email"/>
+                    <InputForm type="email" placeholder="Digite seu e-mail"/>
 
-                    <InputForm name="Password" type="password"/>
+                    <InputForm type="password" placeholder="Digite sua senha"/>
 
                     <ButtonSubmit title="LOGIN"/>
 
