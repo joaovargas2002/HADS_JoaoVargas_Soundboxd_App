@@ -8,20 +8,6 @@ import Title from "../components/Title/Title"
 import ForgotPassword from "../components/ForgotPassword/ForgotPassword"
 
 export default function Login() {
-    const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
-    const redirectUri = "http://127.0.0.1:8000/callback"; // Laravel route
-    const scopes = [
-            "playlist-read-private",
-            "playlist-modify-public",
-        ];
-
-        const loginUrl =
-            "https://accounts.spotify.com/authorize" +
-            "?response_type=code" +
-            "&client_id=" + clientId +
-            "&scope=" + encodeURIComponent(scopes.join(" ")) +
-            "&redirect_uri=" + encodeURIComponent(redirectUri);
-
     return (
         <main className="bg-black h-full">
             <Header />
@@ -35,7 +21,9 @@ export default function Login() {
 
                     <InputForm type="password" placeholder="Digite sua senha"/>
 
-                     <a className="text-white" href={loginUrl}>Login com Spotify</a>
+                     <a className="text-white" href="http://127.0.0.1:8000/spotify/login">
+                        Conectar ao Spotify
+                    </a>
 
                     <ForgotPassword />                    
                 </form>
