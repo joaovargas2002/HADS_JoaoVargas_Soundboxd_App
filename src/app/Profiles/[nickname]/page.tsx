@@ -11,28 +11,19 @@ interface Props {
 }
 
 export default function profileDetails({ params }: Props) {
-  // const [spotifyUser, setSpotifyUser] = useState<any>(null);
-  // const [playlists, setPlaylists] = useState<any[]>([]);
+  useEffect(() => {
+  const token = localStorage.getItem('auth_token');
 
-  // useEffect(() => {
-  //   const fetchSpotifyData = async () => {
-  //     try {
-  //       const resUser = await fetch("http://localhost:8000/api/spotify/me", { credentials: "include" });
-  //       const userData = await resUser.json();
-  //       setSpotifyUser(userData);
+  fetch('http://127.0.0.1:8000/api/spotify/me', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
+  }, []);
 
-  //       const resPlaylists = await fetch("http://localhost:8000/api/spotify/playlists", { credentials: "include" });
-  //       const playlistData = await resPlaylists.json();
-  //       setPlaylists(playlistData.items || []);
-  //     } catch (err) {
-  //       console.error("Erro ao carregar dados do Spotify", err);
-  //     }
-  //   };
-
-  //   fetchSpotifyData();
-  // }, []);
-
-  // if (!spotifyUser) return <p>Carregando...</p>;
   return (
     <>
       <Header />
