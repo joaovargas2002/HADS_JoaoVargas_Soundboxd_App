@@ -62,7 +62,7 @@ export default function ProfileDetails({ params }: Props) {
               <div className="foto-perfil">
                 <img src={userData.images?.[0]?.url || userData.avatar || ''} alt="Foto" />
               </div>
-              <h2 className="text-white">{userData.display_name || userData.name || 'Nome não disponível'}</h2>
+              <h2 className="text-white">{userData.nome_usuario || userData.nome_completo || 'Nome não disponível'}</h2>
               <p className="text-white">{userData.email || 'Email não disponível'}</p>
             </div>
             <div className="atividade flex flex-col">
