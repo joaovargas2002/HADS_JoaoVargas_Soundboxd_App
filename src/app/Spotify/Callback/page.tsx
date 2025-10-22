@@ -10,18 +10,33 @@ export default function SpotifyCallback() {
     const params = useSearchParams();
 
     useEffect(() => {
-        const token = params.get('token'); // Laravel deve redirecionar com ?token=...
+        const token = params.get('token');
+        const isPopup = window.opener && window.opener !== window;
+
         if (token) {
-            // Salva o token usando o utilitário centralizado
             setAuthToken(token);
             console.log('Token salvo com sucesso!');
 
-            // Redireciona para o perfil do usuário logado
-            router.push(routes.myProfile);
+            if (isPopup) {
+                window.opener.postMessage({
+                    type: 'SPOTIFY_AUTH_SUCCESS',
+                    token
+                }, window.location.origin);
+                window.close();
+            } else {
+                router.push(routes.myProfile);
+            }
         } else {
             console.error("Token não encontrado na URL!");
-            // Redireciona para login em caso de erro
-            router.push(routes.login);
+
+            if (isPopup) {
+                window.opener.postMessage({
+                    type: 'SPOTIFY_AUTH_ERROR'
+                }, window.location.origin);
+                window.close();
+            } else {
+                router.push(routes.login);
+            }
         }
     }, [router, params]);
 

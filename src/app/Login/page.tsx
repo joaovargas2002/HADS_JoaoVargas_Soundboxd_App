@@ -7,17 +7,39 @@ import Footer from "../components/Footer/Footer";
 import InputForm from "../components/InputForm/InputForm";
 import Title from "../components/Title/Title";
 import ForgotPassword from "../components/ForgotPassword/ForgotPassword";
+import { routes } from '@/lib/routes';
 
 export default function Login() {
     const router = useRouter();
 
+    useEffect(() => {
+        const handleMessage = (event: MessageEvent) => {
+            if (event.origin !== window.location.origin) {
+                return;
+            }
+
+            if (event.data.type === 'SPOTIFY_AUTH_SUCCESS') {
+                console.log('Autenticação do Spotify bem-sucedida!');
+                router.push(routes.myProfile);
+            } else if (event.data.type === 'SPOTIFY_AUTH_ERROR') {
+                console.error('Erro na autenticação do Spotify');
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+
+        return () => {
+            window.removeEventListener('message', handleMessage);
+        };
+    }, [router]);
+
     const handleSpotifyLogin = () => {
-        // Abre a página de login do Laravel em nova janela
+        // Abre a página de login do Laravel em nova janela popup
         window.open("http://127.0.0.1:8000/spotify/login", "_blank", "width=600,height=800");
     };
 
     return (
-        <main className="bg-black h-full">
+        <main className="bg-black h-screen">
             <Header />
             <div className="main py-32">
                 <Title 
