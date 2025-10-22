@@ -69,6 +69,7 @@ export const routes = {
   login: '/Login',
   register: '/Register',
   profile: getProfileUrl,
-  myProfile: '/profile/me',
+  profiles: '/Profiles',
+  myProfile: '/Profiles/me',
   spotifyCallback: '/Spotify/Callback',
 };

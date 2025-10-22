@@ -147,3 +147,13 @@ export function clearAuthToken(): void {
   if (typeof window === 'undefined') return;
   localStorage.removeItem('auth_token');
 }
+
+/**
+ * Busca os dados do usuário logado
+ */
+export async function getCurrentUser() {
+  if (!isAuthenticated()) {
+    throw new Error('Usuário não autenticado');
+  }
+  return api.get('/api/spotify/me');
+}
