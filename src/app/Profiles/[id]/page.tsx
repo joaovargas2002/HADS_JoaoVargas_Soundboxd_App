@@ -2,6 +2,7 @@
 
 import Footer from "@/app/components/Footer/Footer";
 import Header from "@/app/components/Header/Header";
+import CreateReviewModal from "@/app/components/CreateReviewModal/CreateReviewModal";
 import { useEffect, useState } from "react";
 import { api, isAuthenticated } from "@/lib/api";
 import { useRouter } from "next/navigation";
@@ -28,6 +29,7 @@ export default function ProfileDetails({ params }: Props) {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   useEffect(() => {
     const userId = params.id;
@@ -128,20 +130,19 @@ export default function ProfileDetails({ params }: Props) {
                 )}
               </div>
               
-              <h2 className="text-white text-2xl font-bold mb-2">
-                {userData.display_name || userData.name || 'Usuário'}
-              </h2>
-              
-              <p className="text-gray-400 text-sm mb-4">{userData.email}</p>
-              
-              {userData.spotify_id && (
+              {userData.spotify_id ? (
                 <div className="mt-4 pt-4 border-t border-gray-700">
-                  <p className="text-gray-500 text-xs mb-1">Spotify ID</p>
-                  <p className="text-gray-400 text-sm font-mono truncate">
+                  <h2 className="text-white text-2xl font-bold mb-2">
                     {userData.spotify_id}
-                  </p>
+                  </h2>
                 </div>
-              )}
+              ) :
+                <h2 className="text-white text-2xl font-bold mb-2">
+                  {userData.display_name || userData.name || 'Usuário'}
+                </h2>
+              }
+
+              <h2 className="text-gray-400 text-sm mb-4">{userData.email}</h2>
 
               {params.id === 'me' && (
                 <div className="mt-4">
@@ -159,8 +160,11 @@ export default function ProfileDetails({ params }: Props) {
               {params.id === 'me' && (
                 <div className="botoes border-[2px] border-white p-6">
                   <div className="flex gap-4">
-                    <button className="text-white border-[2px] border-white sf-pro-bold px-6 py-3 hover:bg-white hover:text-black transition-colors">
-                      CRIAR LISTA
+                    <button 
+                      onClick={() => setIsReviewModalOpen(true)}
+                      className="text-white border-[2px] border-white sf-pro-bold px-6 py-3 hover:bg-white hover:text-black transition-colors"
+                    >
+                      CRIAR REVIEW
                     </button>
                     <button className="text-white border-[2px] border-white sf-pro-bold px-6 py-3 hover:bg-white hover:text-black transition-colors">
                       EDITAR PERFIL
@@ -190,6 +194,12 @@ export default function ProfileDetails({ params }: Props) {
         )}
       </main>
       <Footer />
+      
+      {/* Modal de Criar Review */}
+      <CreateReviewModal 
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+      />
     </>
   );
 }
