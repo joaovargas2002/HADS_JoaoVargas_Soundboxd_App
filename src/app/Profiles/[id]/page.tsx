@@ -3,13 +3,15 @@
 import Footer from "@/app/components/Footer/Footer";
 import Header from "@/app/components/Header/Header";
 import CreateReviewModal from "@/app/components/CreateReviewModal/CreateReviewModal";
+import ReviewList from "@/app/components/ReviewList/ReviewList";
 import { useEffect, useState } from "react";
-import { api, isAuthenticated } from "@/lib/api";
+import { api, isAuthenticated, getReviews } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
 
 interface UserData {
   id: number;
+  id_usuario?: number;  // Suporte para estrutura do backend
   name?: string;
   display_name?: string;
   email: string;
@@ -20,6 +22,17 @@ interface UserData {
   created_at?: string;
 }
 
+interface Review {
+  id_atividade?: number;    
+  id_usuario: number;
+  spotify_id: string;
+  tipo_item?: string;        
+  nota?: number;             
+  texto_review?: string;    
+  data_criacao?: string;     
+  data_atividade?: string; 
+}
+
 interface Props {
   params: { id: string };
 }
@@ -27,8 +40,10 @@ interface Props {
 export default function ProfileDetails({ params }: Props) {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadingReviews, setLoadingReviews] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   useEffect(() => {
@@ -43,8 +58,8 @@ export default function ProfileDetails({ params }: Props) {
 
     // Define o endpoint baseado no ID
     const endpoint = userId === 'me'
-      ? '/api/spotify/me'
-      : `/api/users/${userId}`;
+      ? '/spotify/me'
+      : `/users/${userId}`;
 
     console.log('🔍 Buscando perfil:', endpoint);
     console.log('🔐 Autenticado:', isAuthenticated());
@@ -54,6 +69,9 @@ export default function ProfileDetails({ params }: Props) {
         console.log('✅ Dados recebidos:', data);
         setUserData(data);
         setLoading(false);
+        
+        // Carregar reviews do usuário
+        loadUserReviews(data.id || data.id_usuario);
       })
       .catch(err => {
         console.error('❌ Erro ao buscar dados:', err);
@@ -61,6 +79,27 @@ export default function ProfileDetails({ params }: Props) {
         setLoading(false);
       });
   }, [params.id, router]);
+
+  // Função para carregar reviews
+  const loadUserReviews = async (userId?: number) => {
+    if (!userId) return;
+    
+    setLoadingReviews(true);
+    try {
+      const data = await getReviews({ id_usuario: userId });
+      
+      // Suporta diferentes formatos de resposta
+      const reviewsData = data.data || data.reviews || (Array.isArray(data) ? data : []);
+      setReviews(reviewsData);
+      console.log('✅ Reviews carregadas:', reviewsData);
+    } catch (err) {
+      console.warn('⚠️ Não foi possível carregar reviews:', err);
+      // Não é crítico, então não mostra erro pro usuário
+      setReviews([]);
+    } finally {
+      setLoadingReviews(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -176,17 +215,10 @@ export default function ProfileDetails({ params }: Props) {
               {/* ATIVIDADE RECENTE */}
               <div>
                 <h2 className="text-white sf-pro-bold text-2xl mb-4">
-                  {params.id === 'me' ? 'MINHA ATIVIDADE' : 'ATIVIDADE'}
+                  {params.id === 'me' ? 'MINHAS REVIEWS' : 'REVIEWS'}
                 </h2>
                 <div className="border-[2px] border-white p-6 min-h-[300px]">
-                  <div className="text-center text-gray-500 py-10">
-                    <p className="text-lg">Nenhuma atividade ainda</p>
-                    <p className="text-sm mt-2">
-                      {params.id === 'me' 
-                        ? 'Comece criando sua primeira lista de músicas!' 
-                        : 'Este usuário ainda não tem atividades públicas.'}
-                    </p>
-                  </div>
+                  <ReviewList reviews={reviews} isLoading={loadingReviews} />
                 </div>
               </div>
             </div>
@@ -199,6 +231,12 @@ export default function ProfileDetails({ params }: Props) {
       <CreateReviewModal 
         isOpen={isReviewModalOpen}
         onClose={() => setIsReviewModalOpen(false)}
+        onReviewCreated={() => {
+          // Recarregar reviews quando uma nova for criada
+          if (userData) {
+            loadUserReviews(userData.id || userData.id_usuario);
+          }
+        }}
       />
     </>
   );

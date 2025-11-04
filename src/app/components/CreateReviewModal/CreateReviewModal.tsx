@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from "react";
-import { api } from "@/lib/api";
+import { searchSpotify, createReview } from "@/lib/api";
 import { X, Search, Music, Disc3 } from "lucide-react";
 
 interface SpotifyAlbum {
@@ -29,9 +29,10 @@ type SpotifyItem = SpotifyAlbum | SpotifyPlaylist;
 interface CreateReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onReviewCreated?: () => void; // Callback para atualizar lista
 }
 
-export default function CreateReviewModal({ isOpen, onClose }: CreateReviewModalProps) {
+export default function CreateReviewModal({ isOpen, onClose, onReviewCreated }: CreateReviewModalProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SpotifyItem[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -60,9 +61,7 @@ export default function CreateReviewModal({ isOpen, onClose }: CreateReviewModal
 
     setIsSearching(true);
     try {
-      const response = await api.get<{ albums?: SpotifyAlbum[], playlists?: SpotifyPlaylist[] }>(
-        `/api/spotify/search?q=${encodeURIComponent(searchQuery)}&type=${searchType}`
-      );
+      const response = await searchSpotify(searchQuery, searchType);
 
       const results: SpotifyItem[] = [];
       
@@ -97,24 +96,38 @@ export default function CreateReviewModal({ isOpen, onClose }: CreateReviewModal
 
     setIsSubmitting(true);
     try {
-      await api.post('/api/reviews', {
+      await createReview({
         spotify_id: selectedItem.id,
-        item_type: selectedItem.type,
+        tipo_item: selectedItem.type === 'album' ? 'album' : 'playlist',
         rating,
-        review_text: reviewText,
+        review_text: reviewText || undefined,
       });
 
-      // Resetar e fechar
+      // Sucesso - resetar e fechar
       setSelectedItem(null);
       setRating(0);
       setReviewText("");
+      
+      // Chamar callback se fornecido
+      if (onReviewCreated) {
+        onReviewCreated();
+      }
+      
       onClose();
       
-      // Recarregar a página para mostrar a nova review
-      window.location.reload();
-    } catch (error) {
+      // Mostrar mensagem de sucesso
+      alert('Review criada com sucesso! ⭐');
+    } catch (error: any) {
       console.error('Erro ao criar review:', error);
-      alert('Erro ao criar review. Tente novamente.');
+      
+      // Mensagens de erro mais específicas
+      if (error.message?.includes('409') || error.message?.includes('já tem uma review')) {
+        alert('Você já criou uma review para este item!');
+      } else if (error.message?.includes('401')) {
+        alert('Você precisa estar autenticado para criar reviews.');
+      } else {
+        alert('Erro ao criar review. Tente novamente.');
+      }
     } finally {
       setIsSubmitting(false);
     }
