@@ -66,11 +66,11 @@ export default function CreateReviewModal({ isOpen, onClose, onReviewCreated }: 
       const results: SpotifyItem[] = [];
       
       if (searchType === 'both' || searchType === 'album') {
-        results.push(...(response.albums?.items || []));
+        results.push(...(response.albums || []));
       }
       
       if (searchType === 'both' || searchType === 'playlist') {
-        results.push(...(response.playlists?.items || []));
+        results.push(...(response.playlists || []));
       }
 
       setSearchResults(results);

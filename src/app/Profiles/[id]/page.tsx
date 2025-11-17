@@ -193,7 +193,9 @@ export default function ProfileDetails({ params }: Props) {
               )}
             </div>
 
+            {/* ATIVIDADES DO PERFIL */}
             <div className="atividade flex flex-col gap-6">
+              {/* BOTÕES DE AÇÃO */}
               {params.id === 'me' && (
                 <div className="botoes border-[2px] border-white p-6">
                   <div className="flex gap-4">
@@ -210,6 +212,7 @@ export default function ProfileDetails({ params }: Props) {
                 </div>
               )}
 
+              {/* ATIVIDADE RECENTE */}
               <div>
                 <h2 className="text-white sf-pro-bold text-2xl mb-4">
                   {params.id === 'me' ? 'MINHAS REVIEWS' : 'REVIEWS'}
@@ -224,6 +227,7 @@ export default function ProfileDetails({ params }: Props) {
       </main>
       <Footer />
       
+      {/* Modal de Criar Review */}
       <CreateReviewModal 
         isOpen={isReviewModalOpen}
         onClose={() => setIsReviewModalOpen(false)}
