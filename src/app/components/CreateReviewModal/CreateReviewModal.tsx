@@ -40,7 +40,7 @@ export default function CreateReviewModal({ isOpen, onClose, onReviewCreated }: 
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [searchType, setSearchType] = useState<'album' | 'playlist' | 'both'>('both');
+  const [searchType, setSearchType] = useState<'album' | 'playlist'>('album');
 
   // Debounce para a busca
   useEffect(() => {
@@ -65,12 +65,14 @@ export default function CreateReviewModal({ isOpen, onClose, onReviewCreated }: 
 
       const results: SpotifyItem[] = [];
       
-      if (searchType === 'both' || searchType === 'album') {
-        results.push(...(response.albums || []));
+      if (searchType === 'album') {
+        const albums = response.albums || [];
+        results.push(...albums);
       }
       
-      if (searchType === 'both' || searchType === 'playlist') {
-        results.push(...(response.playlists || []));
+      if (searchType === 'playlist') {
+        const playlists = response.playlists || [];
+        results.push(...playlists);
       }
 
       setSearchResults(results);
@@ -168,16 +170,6 @@ export default function CreateReviewModal({ isOpen, onClose, onReviewCreated }: 
             <>
               {/* Filtro de tipo */}
               <div className="mb-4 flex gap-2">
-                <button
-                  onClick={() => setSearchType('both')}
-                  className={`px-4 py-2 text-sm sf-pro-bold transition-colors ${
-                    searchType === 'both'
-                      ? 'bg-white text-black'
-                      : 'bg-transparent text-white border border-white hover:bg-white hover:text-black'
-                  }`}
-                >
-                  TUDO
-                </button>
                 <button
                   onClick={() => setSearchType('album')}
                   className={`px-4 py-2 text-sm sf-pro-bold transition-colors ${
