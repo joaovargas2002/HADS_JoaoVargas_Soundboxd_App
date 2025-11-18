@@ -30,7 +30,19 @@ interface Review {
   nota?: number;             
   texto_review?: string;    
   data_criacao?: string;     
-  data_atividade?: string; 
+  data_atividade?: string;
+  
+  item_name?: string;
+  item_description?: string;
+  item_image_url?: string;
+  spotify_url?: string;
+  album_artist?: string;
+  album_release_date?: string;
+  album_type?: string;
+  album_total_tracks?: number;
+  playlist_owner?: string;
+  playlist_total_tracks?: number;
+  playlist_public?: boolean;
 }
 
 interface Props {

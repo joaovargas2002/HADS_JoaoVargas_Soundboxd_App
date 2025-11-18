@@ -12,7 +12,20 @@ interface Review {
   data_criacao?: string;     
   data_atividade?: string; 
   
-  // Dados extras que podem ser incluídos
+  item_name?: string;
+  item_description?: string;
+  item_image_url?: string;
+  spotify_url?: string;
+  
+  album_artist?: string;
+  album_release_date?: string;
+  album_type?: string;
+  album_total_tracks?: number;
+  
+  playlist_owner?: string;
+  playlist_total_tracks?: number;
+  playlist_public?: boolean;
+  
   spotify_data?: {
     name: string;
     images: Array<{ url: string }>;
@@ -51,12 +64,22 @@ export default function ReviewList({ reviews, isLoading }: ReviewListProps) {
   return (
     <div className="space-y-4">
       {reviews.map((review) => {
-        // Normalizar campos (suporta ambas as estruturas)
         const itemType = review.tipo_item || 'album';
         const rating = review.nota || 0;
         const reviewText = review.texto_review || '';
         const date = review.data_criacao || review.data_atividade || '';
         const reviewId = review.id_atividade || 0;
+
+        const itemName = review.item_name || review.spotify_data?.name;
+        const itemImage = review.item_image_url || review.spotify_data?.images?.[0]?.url;
+        const spotifyUrl = review.spotify_url;
+        
+        const artistName = review.album_artist || review.spotify_data?.artists?.map(a => a.name).join(', ');
+        const ownerName = review.playlist_owner || review.spotify_data?.owner?.display_name;
+        const totalTracks = itemType === 'album' 
+          ? review.album_total_tracks 
+          : review.playlist_total_tracks || review.spotify_data?.tracks?.total;
+        const releaseDate = review.album_release_date;
 
         return (
           <div 
@@ -64,14 +87,29 @@ export default function ReviewList({ reviews, isLoading }: ReviewListProps) {
             className="border-2 border-white bg-black p-4 hover:bg-gray-900 transition-colors"
           >
             <div className="flex gap-4">
-              {/* Imagem do item (se disponível) */}
-              {review.spotify_data?.images?.[0]?.url && (
+              {/* Imagem do item */}
+              {itemImage && (
                 <div className="flex-shrink-0">
-                  <img
-                    src={review.spotify_data.images[0].url}
-                    alt={review.spotify_data.name}
-                    className="w-24 h-24 object-cover"
-                  />
+                  {spotifyUrl ? (
+                    <a 
+                      href={spotifyUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="block hover:opacity-80 transition-opacity"
+                    >
+                      <img
+                        src={itemImage}
+                        alt={itemName || 'Cover'}
+                        className="w-24 h-24 object-cover border-2 border-gray-700"
+                      />
+                    </a>
+                  ) : (
+                    <img
+                      src={itemImage}
+                      alt={itemName || 'Cover'}
+                      className="w-24 h-24 object-cover border-2 border-gray-700"
+                    />
+                  )}
                 </div>
               )}
 
@@ -98,26 +136,47 @@ export default function ReviewList({ reviews, isLoading }: ReviewListProps) {
                   )}
                 </div>
 
-                {/* Nome do item (se disponível) */}
-                {review.spotify_data?.name && (
+                {itemName && (
                   <h3 className="text-white sf-pro-bold text-lg mb-1">
-                    {review.spotify_data.name}
+                    {spotifyUrl ? (
+                      <a 
+                        href={spotifyUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="hover:text-gray-300 transition-colors"
+                      >
+                        {itemName}
+                      </a>
+                    ) : (
+                      itemName
+                    )}
                   </h3>
                 )}
 
-                {/* Artista ou criador */}
-                {review.spotify_data?.artists && (
-                  <p className="text-gray-400 text-sm mb-3">
-                    {review.spotify_data.artists.map(a => a.name).join(', ')}
-                  </p>
-                )}
-                {review.spotify_data?.owner && (
-                  <p className="text-gray-400 text-sm mb-3">
-                    Por {review.spotify_data.owner.display_name}
-                  </p>
-                )}
+                <div className="text-gray-400 text-sm mb-3 space-y-1">
+                  {itemType === 'album' && artistName && (
+                    <p>Por {artistName}</p>
+                  )}
+                  
+                  {itemType === 'playlist' && ownerName && (
+                    <p>Por {ownerName}</p>
+                  )}
+                  
+                  <div className="flex items-center gap-3 text-xs text-gray-500">
+                    {releaseDate && itemType === 'album' && (
+                      <span>Lançamento: {new Date(releaseDate).getFullYear()}</span>
+                    )}
+                    {totalTracks && (
+                      <span>
+                        {totalTracks} {itemType === 'album' ? 'faixas' : 'músicas'}
+                      </span>
+                    )}
+                    {review.album_type && itemType === 'album' && (
+                      <span className="capitalize">{review.album_type}</span>
+                    )}
+                  </div>
+                </div>
 
-                {/* Rating (Estrelas) */}
                 <div className="flex items-center gap-2 mb-3">
                   <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -141,7 +200,17 @@ export default function ReviewList({ reviews, isLoading }: ReviewListProps) {
                   </p>
                 )}
 
-                {/* Spotify ID (para debug) */}
+                {spotifyUrl && (
+                  <a
+                    href={spotifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-3 text-xs text-green-400 hover:text-green-300 transition-colors"
+                  >
+                    Abrir no Spotify →
+                  </a>
+                )}
+
                 {process.env.NODE_ENV === 'development' && (
                   <p className="text-xs text-gray-600 mt-2">
                     Spotify ID: {review.spotify_id}

@@ -118,12 +118,28 @@ export function getUser() {
 // REVIEWS
 // ==========================================
 
-export async function createReview(data: {
+export interface CreateReviewData {
   spotify_id: string;
   tipo_item: 'album' | 'playlist';
   rating: number;
   review_text?: string;
-}) {
+  
+  item_name: string;
+  item_description?: string | null;
+  item_image_url?: string | null;
+  spotify_url?: string | null;
+  
+  album_artist?: string;
+  album_release_date?: string | null;
+  album_type?: string | null;
+  album_total_tracks?: number;
+  
+  playlist_owner?: string;
+  playlist_total_tracks?: number;
+  playlist_public?: boolean;
+}
+
+export async function createReview(data: CreateReviewData) {
   return apiRequest('/reviews', {
     method: 'POST',
     body: JSON.stringify(data),

@@ -9,18 +9,22 @@ interface SpotifyAlbum {
   name: string;
   artists: Array<{ name: string }>;
   images: Array<{ url: string }>;
-  release_date: string;
-  album_type: string;
+  release_date?: string;
+  album_type?: string;
+  total_tracks?: number;
+  external_urls?: { spotify: string };
   type: 'album';
 }
 
 interface SpotifyPlaylist {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   images: Array<{ url: string }>;
   owner: { display_name: string };
   tracks: { total: number };
+  public?: boolean;
+  external_urls?: { spotify: string };
   type: 'playlist';
 }
 
@@ -98,12 +102,32 @@ export default function CreateReviewModal({ isOpen, onClose, onReviewCreated }: 
 
     setIsSubmitting(true);
     try {
-      await createReview({
+      const payload: any = {
         spotify_id: selectedItem.id,
         tipo_item: selectedItem.type === 'album' ? 'album' : 'playlist',
         rating,
         review_text: reviewText || undefined,
-      });
+        
+        item_name: selectedItem.name,
+        item_description: selectedItem.type === 'playlist' ? (selectedItem as SpotifyPlaylist).description || null : null,
+        item_image_url: selectedItem.images[0]?.url || null,
+        spotify_url: selectedItem.external_urls?.spotify || null,
+      };
+
+      if (selectedItem.type === 'album') {
+        const album = selectedItem as SpotifyAlbum;
+        payload.album_artist = album.artists?.map(a => a.name).join(', ') || 'Unknown';
+        payload.album_release_date = album.release_date || null;
+        payload.album_type = album.album_type || null;
+        payload.album_total_tracks = album.total_tracks || 0;
+      } else {
+        const playlist = selectedItem as SpotifyPlaylist;
+        payload.playlist_owner = playlist.owner?.display_name || 'Unknown';
+        payload.playlist_total_tracks = playlist.tracks?.total || 0;
+        payload.playlist_public = playlist.public !== false;
+      }
+
+      await createReview(payload);
 
       // Sucesso - resetar e fechar
       setSelectedItem(null);
