@@ -15,10 +15,8 @@ export default function ProfilesPage() {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      console.log('✅ Usuário autenticado. Redirecionando para perfil...');
       router.push(routes.myProfile);
     } else {
-      console.log('❌ Usuário não autenticado. Redirecionando para login...');
       router.push(routes.login);
     }
   }, [router]);

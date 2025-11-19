@@ -72,25 +72,39 @@ export default function App() {
       <Swiper
         modules={[Virtual, Navigation, Pagination]}
         onSwiper={setSwiperRef}
-        slidesPerView={3}
+        slidesPerView={1}
         centeredSlides={true}
-        spaceBetween={30}
+        spaceBetween={15}
         pagination={{
           type: 'fraction',
         }}
         navigation={true}
         virtual
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 25,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+        }}
       >
 
         {sliceList.map((newList) => (
-          <SwiperSlide className='flex overflow-scroll flex-col gap-6'>
+          <SwiperSlide className='flex overflow-scroll flex-col gap-3 sm:gap-4 md:gap-6 px-2'>
             {newList.map((album) => (
-              <div className='flex h-fit border border-white p-4' key={album.id}>
-                <img className='w-24' src={album.image} />
-                <div className='grid'>
-                  <h3 className='montserrat'>{album.title}</h3>
-                  <p className='montserrat'>{album.year}</p>
-                  <p className='montserrat'>{album.genre}</p>
+              <div className='flex h-fit border border-white p-2 sm:p-3 md:p-4 gap-2 sm:gap-3 md:gap-4' key={album.id}>
+                <img className='w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 object-cover' src={album.image} />
+                <div className='grid content-start'>
+                  <h3 className='montserrat text-sm sm:text-base md:text-lg text-white'>{album.title}</h3>
+                  <p className='montserrat text-xs sm:text-sm md:text-base text-white'>{album.year}</p>
+                  <p className='montserrat text-xs sm:text-sm md:text-base text-white'>{album.genre}</p>
                 </div>
               </div>
             ))

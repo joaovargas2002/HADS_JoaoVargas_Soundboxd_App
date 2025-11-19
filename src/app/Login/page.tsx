@@ -34,34 +34,35 @@ export default function Login() {
     }, [router]);
 
     const handleSpotifyLogin = () => {
-        // Abre a página de login do Laravel em nova janela popup
         window.open("http://127.0.0.1:8000/spotify/login", "_blank", "width=600,height=800");
     };
 
     return (
-        <main className="bg-black h-screen">
+        <main className="bg-black min-h-screen flex flex-col">
             <Header />
-            <div className="main py-32">
-                <Title 
-                    titleh1="Log in or register now." 
-                    subtitle="Don't have an account yet?" 
-                    link='/Register' 
-                    linktitle="Register right now!"
-                />
+            <div className="main flex-1 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+                <div className="w-full">
+                    <Title
+                        titleh1="Log in or register now."
+                        subtitle="Don't have an account yet?"
+                        link='/Register'
+                        linktitle="Register right now!"
+                    />
 
-                <div className="grid gap-2.5 justify-items-center my-9 h-full">
-                    <InputForm type="email" placeholder="Digite seu e-mail"/>
-                    <InputForm type="password" placeholder="Digite sua senha"/>
-                    
-                    <button
-                        type="button"
-                        className="text-white underline"
-                        onClick={handleSpotifyLogin}
-                    >
-                        Conectar ao Spotify
-                    </button>
+                    <div className="grid gap-3 sm:gap-4 md:gap-2.5 justify-items-center my-6 sm:my-8 md:my-9 w-full max-w-md mx-auto">
+                        <InputForm type="email" placeholder="Digite seu e-mail"/>
+                        <InputForm type="password" placeholder="Digite sua senha"/>
 
-                    <ForgotPassword />
+                        <button
+                            type="button"
+                            className="text-white underline text-sm sm:text-base hover:text-gray-300 transition-colors"
+                            onClick={handleSpotifyLogin}
+                        >
+                            Conectar ao Spotify
+                        </button>
+
+                        <ForgotPassword />
+                    </div>
                 </div>
             </div>
             <Footer />
