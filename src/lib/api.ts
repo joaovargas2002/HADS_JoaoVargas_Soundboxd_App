@@ -189,13 +189,38 @@ export async function searchSpotify(query: string, type: 'album' | 'playlist' | 
   return apiRequest(`/spotify/search?${params}`);
 }
 
-// USUÁRIO
+// USUÁRIOS
+
 export async function getRecentUsers(limit: number = 6) {
   const params = new URLSearchParams({ 
     limit: limit.toString(),
     exclude_current: 'true'
   });
   return apiRequest(`/users/recent?${params}`);
+}
+
+export async function followUser(userId: number) {
+  return apiRequest(`/users/${userId}/follow`, {
+    method: 'POST',
+  });
+}
+
+export async function unfollowUser(userId: number) {
+  return apiRequest(`/users/${userId}/unfollow`, {
+    method: 'DELETE',
+  });
+}
+
+export async function checkIfFollowing(userId: number) {
+  return apiRequest(`/users/${userId}/is-following`);
+}
+
+export async function getUserFollowers(userId: number) {
+  return apiRequest(`/users/${userId}/followers`);
+}
+
+export async function getUserFollowing(userId: number) {
+  return apiRequest(`/users/${userId}/following`);
 }
 
 // ==========================================

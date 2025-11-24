@@ -4,8 +4,9 @@ import Footer from "@/app/components/Footer/Footer";
 import Header from "@/app/components/Header/Header";
 import CreateReviewModal from "@/app/components/CreateReviewModal/CreateReviewModal";
 import ReviewList from "@/app/components/ReviewList/ReviewList";
+import FollowersTabs from "@/app/components/FollowersTabs/FollowersTabs";
 import { useEffect, useState } from "react";
-import { api, isAuthenticated, getReviews } from "@/lib/api";
+import { api, isAuthenticated, getReviews, followUser, unfollowUser, checkIfFollowing } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
 
@@ -57,6 +58,8 @@ export default function ProfileDetails({ params }: Props) {
   const [loading, setLoading] = useState(true);
   const [loadingReviews, setLoadingReviews] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [loadingFollow, setLoadingFollow] = useState(false);
 
   useEffect(() => {
     const userId = params.id;
@@ -82,8 +85,14 @@ export default function ProfileDetails({ params }: Props) {
         setUserData(data);
         setLoading(false);
         
+        const profileUserId = data.id || data.id_usuario;
+        
         // Carregar reviews do usuário
-        loadUserReviews(data.id || data.id_usuario);
+        loadUserReviews(profileUserId);
+        
+        if (userId !== 'me' && profileUserId) {
+          checkFollowStatus(profileUserId);
+        }
       })
       .catch(err => {
         console.error('❌ Erro ao buscar dados:', err);
@@ -110,6 +119,35 @@ export default function ProfileDetails({ params }: Props) {
       setReviews([]);
     } finally {
       setLoadingReviews(false);
+    }
+  };
+
+  const checkFollowStatus = async (userId: number) => {
+    try {
+      const response = await checkIfFollowing(userId);
+      setIsFollowing(response.is_following || false);
+    } catch (err) {
+      console.error('Erro ao verificar status de seguimento:', err);
+    }
+  };
+
+  const handleFollowToggle = async () => {
+    const profileUserId = userData?.id || userData?.id_usuario;
+    if (!profileUserId) return;
+
+    setLoadingFollow(true);
+    try {
+      if (isFollowing) {
+        await unfollowUser(profileUserId);
+        setIsFollowing(false);
+      } else {
+        await followUser(profileUserId);
+        setIsFollowing(true);
+      }
+    } catch (err) {
+      console.error('Erro ao seguir/deixar de seguir:', err);
+    } finally {
+      setLoadingFollow(false);
     }
   };
 
@@ -195,12 +233,26 @@ export default function ProfileDetails({ params }: Props) {
 
               <h2 className="text-gray-400 text-sm mb-4">{userData.email}</h2>
 
-              {params.id === 'me' && (
+              {params.id === 'me' ? (
                 <div className="mt-4">
                   <p className="text-green-400 text-sm flex items-center gap-2">
                     <span className="inline-block w-2 h-2 bg-green-400 rounded-full"></span>
                     Este é seu perfil
                   </p>
+                </div>
+              ) : (
+                <div className="mt-4">
+                  <button
+                    onClick={handleFollowToggle}
+                    disabled={loadingFollow}
+                    className={`w-full py-3 font-bold transition-all duration-200 ${
+                      isFollowing
+                        ? 'bg-gray-700 text-white hover:bg-red-600'
+                        : 'bg-white text-black hover:bg-green-500 hover:text-white'
+                    } ${loadingFollow ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    {loadingFollow ? 'Carregando...' : isFollowing ? 'Deixar de Seguir' : 'Seguir'}
+                  </button>
                 </div>
               )}
             </div>
@@ -223,6 +275,16 @@ export default function ProfileDetails({ params }: Props) {
                   </div>
                 </div>
               )}
+
+              {/* SEGUIDORES E SEGUINDO */}
+              <div>
+                <h2 className="text-white sf-pro-bold text-2xl mb-4">
+                  COMUNIDADE
+                </h2>
+                {userData && (userData.id || userData.id_usuario) && (
+                  <FollowersTabs userId={userData.id || userData.id_usuario!} />
+                )}
+              </div>
 
               {/* ATIVIDADE RECENTE */}
               <div>
