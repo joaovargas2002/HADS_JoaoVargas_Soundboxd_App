@@ -189,6 +189,15 @@ export async function searchSpotify(query: string, type: 'album' | 'playlist' | 
   return apiRequest(`/spotify/search?${params}`);
 }
 
+// USUÁRIO
+export async function getRecentUsers(limit: number = 6) {
+  const params = new URLSearchParams({ 
+    limit: limit.toString(),
+    exclude_current: 'true'
+  });
+  return apiRequest(`/users/recent?${params}`);
+}
+
 // ==========================================
 // LEGACY (para compatibilidade com código existente)
 // ==========================================
