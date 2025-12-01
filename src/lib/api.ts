@@ -223,6 +223,13 @@ export async function getUserFollowing(userId: number) {
   return apiRequest(`/users/${userId}/following`);
 }
 
+export async function getRecentActivity(limit: number = 15) {
+  const params = new URLSearchParams({ 
+    limit: limit.toString()
+  });
+  return apiRequest(`/activity/recent?${params}`);
+}
+
 // ==========================================
 // LEGACY (para compatibilidade com código existente)
 // ==========================================
