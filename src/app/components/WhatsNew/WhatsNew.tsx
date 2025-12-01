@@ -38,8 +38,8 @@ export default function WhatsNew() {
         return (
             <div className="grid justify-items-center py-8">
                 <div className="grid w-4/5 justify-items-start">
-                    <h2 className="sf-pro-bold text-white text-3xl">Whats New</h2>
-                    <p className="sf-pro-medium text-white">This Week...</p>
+                    <h2 className="sf-pro-bold text-white text-3xl">O Que Há de Novo</h2>
+                    <p className="sf-pro-medium text-white">Esta Semana...</p>
                     <p className="text-red-500 mt-4">{error}</p>
                 </div>
             </div>
@@ -49,8 +49,8 @@ export default function WhatsNew() {
     return (
         <div className="grid justify-items-center py-8">
             <div className="grid w-4/5 justify-items-start">
-                <h2 className="sf-pro-bold text-white text-3xl">Whats New</h2>
-                <p className="sf-pro-medium text-white">This Week...</p>
+                <h2 className="sf-pro-bold text-white text-3xl">O Que Há de Novo</h2>
+                <p className="sf-pro-medium text-white">Esta Semana...</p>
 
                 <div className="grid grid-cols-6 w-full mt-2 py-2 gap-4">
                     {albums.map((album) => (

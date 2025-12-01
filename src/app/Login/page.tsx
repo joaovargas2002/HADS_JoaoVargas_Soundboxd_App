@@ -4,9 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Header from "@/app/components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import InputForm from "../components/InputForm/InputForm";
 import Title from "../components/Title/Title";
-import ForgotPassword from "../components/ForgotPassword/ForgotPassword";
 import { routes } from '@/lib/routes';
 
 export default function Login() {
@@ -19,7 +17,6 @@ export default function Login() {
             }
 
             if (event.data.type === 'SPOTIFY_AUTH_SUCCESS') {
-                console.log('Autenticação do Spotify bem-sucedida!');
                 router.push(routes.myProfile);
             } else if (event.data.type === 'SPOTIFY_AUTH_ERROR') {
                 console.error('Erro na autenticação do Spotify');
@@ -43,25 +40,19 @@ export default function Login() {
             <div className="main flex-1 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
                 <div className="w-full">
                     <Title
-                        titleh1="Log in or register now."
-                        subtitle="Don't have an account yet?"
+                        titleh1="Registre-se agora mesmo!"
+                        subtitle="Conecte-se com sua conta Spotify para começar."
                         link='/Register'
-                        linktitle="Register right now!"
                     />
 
-                    <div className="grid gap-3 sm:gap-4 md:gap-2.5 justify-items-center my-6 sm:my-8 md:my-9 w-full max-w-md mx-auto">
-                        <InputForm type="email" placeholder="Digite seu e-mail"/>
-                        <InputForm type="password" placeholder="Digite sua senha"/>
-
+                    <div className="grid justify-items-center w-full max-w-md mx-auto">
                         <button
                             type="button"
-                            className="text-white underline text-sm sm:text-base hover:text-gray-300 transition-colors"
+                            className="text-white border-2 border-white p-2 text-sm sm:text-base hover:text-gray-300 transition-colors"
                             onClick={handleSpotifyLogin}
                         >
                             Conectar ao Spotify
                         </button>
-
-                        <ForgotPassword />
                     </div>
                 </div>
             </div>

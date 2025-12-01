@@ -201,7 +201,6 @@ export default function ProfileDetails({ params }: Props) {
       <main className="bg-black min-h-screen w-full pt-2">
         {userData && (
           <div className="grid grid-cols-1 lg:grid-cols-[25%_75%] gap-6 p-6">
-            {/* PERFIL DO USUÁRIO */}
             <div className="profile border-[2px] border-white p-6 h-fit">
               <div className="foto-perfil mb-4">
                 {userData.images?.[0]?.url || userData.avatar || userData.spotify_avatar ? (
@@ -257,9 +256,7 @@ export default function ProfileDetails({ params }: Props) {
               )}
             </div>
 
-            {/* ATIVIDADES DO PERFIL */}
             <div className="atividade flex flex-col gap-6">
-              {/* BOTÕES DE AÇÃO */}
               {params.id === 'me' && (
                 <div className="botoes border-[2px] border-white p-6">
                   <div className="flex gap-4">
@@ -269,14 +266,10 @@ export default function ProfileDetails({ params }: Props) {
                     >
                       CRIAR REVIEW
                     </button>
-                    <button className="text-white border-[2px] border-white sf-pro-bold px-6 py-3 hover:bg-white hover:text-black transition-colors">
-                      EDITAR PERFIL
-                    </button>
                   </div>
                 </div>
               )}
 
-              {/* SEGUIDORES E SEGUINDO */}
               <div>
                 <h2 className="text-white sf-pro-bold text-2xl mb-4">
                   COMUNIDADE
@@ -286,7 +279,6 @@ export default function ProfileDetails({ params }: Props) {
                 )}
               </div>
 
-              {/* ATIVIDADE RECENTE */}
               <div>
                 <h2 className="text-white sf-pro-bold text-2xl mb-4">
                   {params.id === 'me' ? 'MINHAS REVIEWS' : 'REVIEWS'}
@@ -301,12 +293,10 @@ export default function ProfileDetails({ params }: Props) {
       </main>
       <Footer />
       
-      {/* Modal de Criar Review */}
       <CreateReviewModal 
         isOpen={isReviewModalOpen}
         onClose={() => setIsReviewModalOpen(false)}
         onReviewCreated={() => {
-          // Recarregar reviews quando uma nova for criada
           if (userData) {
             loadUserReviews(userData.id || userData.id_usuario);
           }

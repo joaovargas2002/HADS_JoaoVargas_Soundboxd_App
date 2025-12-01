@@ -13,7 +13,7 @@ export default function Home() {
     <main className='bg-black'>
 
       <Header />
-      <Title titleh1 ="Discover music around the world." subtitle="Theres a lot of music to be found. Checkout the lists down below." link=""/>
+      <Title titleh1 ="Descubra música ao redor do mundo." subtitle="Há muita música para ser descoberta. Confira as listas abaixo." link=""/>
       <MySwiper />
       <WhatsNew />
       <Profiles />

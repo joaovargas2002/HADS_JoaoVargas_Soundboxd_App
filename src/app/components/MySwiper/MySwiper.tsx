@@ -140,7 +140,7 @@ export default function App() {
         }}
       >
         {sliceList.map((reviewGroup, slideIndex) => (
-          <SwiperSlide key={slideIndex} className='flex overflow-scroll flex-col gap-3 sm:gap-4 md:gap-6 px-2'>
+          <SwiperSlide key={slideIndex} className='flex flex-col gap-3 sm:gap-4 md:gap-6 px-2 pt-2'>
             {reviewGroup.map((review) => (
               <Link 
                 key={review.id} 
@@ -149,10 +149,9 @@ export default function App() {
               >
                 <div className="relative w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 flex-shrink-0">
                   {review.item_image_url ? (
-                    <Image
+                    <img
                       src={review.item_image_url}
                       alt={review.item_name}
-                      fill
                       className="object-cover"
                       sizes="96px"
                     />

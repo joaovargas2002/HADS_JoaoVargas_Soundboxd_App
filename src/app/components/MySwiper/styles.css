@@ -12,10 +12,12 @@
     background: #000;
     border: 1px solid #fff;
 
-    /* Center slide text vertically */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 !important;
   }
 
   .swiper-slide::-webkit-scrollbar {
