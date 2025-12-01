@@ -12,12 +12,16 @@ import { routes } from "@/lib/routes";
 
 interface UserData {
   id: number;
-  id_usuario?: number;  // Suporte para estrutura do backend
+  id_usuario?: number;
   name?: string;
   display_name?: string;
+  nome?: string;
+  nome_completo?: string;  // Campo do backend Laravel
+  nome_usuario?: string;   // Campo do backend Laravel
   email: string;
   avatar?: string;
   spotify_avatar?: string;
+  foto_perfil?: string;  
   images?: Array<{ url: string }>;
   spotify_id?: string;
   created_at?: string;
@@ -203,16 +207,16 @@ export default function ProfileDetails({ params }: Props) {
           <div className="grid grid-cols-1 lg:grid-cols-[25%_75%] gap-6 p-6">
             <div className="profile border-[2px] border-white p-6 h-fit">
               <div className="foto-perfil mb-4">
-                {userData.images?.[0]?.url || userData.avatar || userData.spotify_avatar ? (
+                {userData.images?.[0]?.url || userData.avatar || userData.spotify_avatar || userData.foto_perfil ? (
                   <img 
-                    src={userData.images?.[0]?.url || userData.avatar || userData.spotify_avatar} 
-                    alt={userData.display_name || userData.name || 'Foto de perfil'}
+                    src={userData.images?.[0]?.url || userData.avatar || userData.spotify_avatar || userData.foto_perfil} 
+                    alt={userData.nome_completo || userData.display_name || userData.name || userData.nome || 'Foto de perfil'}
                     className="w-full rounded-lg aspect-square object-cover"
                   />
                 ) : (
                   <div className="w-full aspect-square bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
                     <span className="text-6xl text-white font-bold">
-                      {(userData.display_name || userData.name || 'U')[0].toUpperCase()}
+                      {(userData.nome_completo || userData.display_name || userData.name || userData.nome || 'U')[0].toUpperCase()}
                     </span>
                   </div>
                 )}
@@ -226,7 +230,7 @@ export default function ProfileDetails({ params }: Props) {
                 </div>
               ) :
                 <h2 className="text-white text-2xl font-bold mb-2">
-                  {userData.display_name || userData.name || 'Usuário'}
+                  {userData.nome_completo || userData.display_name || userData.name || userData.nome || 'Usuário'}
                 </h2>
               }
 
